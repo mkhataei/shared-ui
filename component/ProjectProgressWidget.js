@@ -145,15 +145,10 @@ function ProjectProgressWidget({
     xaxis: {
       type: 'category', // تغییر به category برای تاریخ شمسی
       labels: {
-        style: { colors: theme.palette.text.secondary, fontSize: '10px' },
-        rotate: -45,
-        rotateAlways: true,
-        hideOverlappingLabels: true,
-        trim: true,
+        show: false, // مخفی کردن label های محور x
       },
       axisBorder: { show: false },
       axisTicks: { show: false },
-      tickAmount: 6, // محدود کردن تعداد label ها
     },
     yaxis: {
       labels: {
