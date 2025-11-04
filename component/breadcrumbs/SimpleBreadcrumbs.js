@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: '8px',
-  padding: '8px 16px',
+  border: `1px solid #E4E7EB`,
+  borderRadius: '4px',
+  padding: '1px 8px',
   width: 'fit-content',
   '& .MuiBreadcrumbs-separator': {
     color: theme.palette.text.secondary,
@@ -15,16 +15,17 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 }))
 
 const StyledLink = styled('span')(({ theme }) => ({
-  color: theme.palette.text.primary,
+  color: '#4B5563',
+  // color: theme.palette.text.secondary,
   textDecoration: 'none !important',
-  fontSize: '0.875rem',
-  fontWeight: 400,
+  fontSize: '0.900rem',
+  fontWeight: 500,
   cursor: 'pointer',
 }))
 
 const CurrentPage = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  fontSize: '0.875rem',
+  color: '#4B5563',
+  fontSize: '0.900rem',
   fontWeight: 500,
 }))
 
