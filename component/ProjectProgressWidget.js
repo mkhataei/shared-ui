@@ -8,6 +8,7 @@ import ReactApexChart from 'react-apexcharts'
 
 function ProjectProgressWidget({
   projectName = '',
+  category = '', // نوع زیرپروژه: TARH یا JARI
   actualProgress = 0,
   plannedProgress = 0,
   progressData = [],
@@ -196,6 +197,22 @@ function ProjectProgressWidget({
             <Typography className='text-base font-medium tracking-tight leading-6 truncate'>
               {projectName || 'پیشرفت پروژه'}
             </Typography>
+            {category && (
+              <Chip
+                size='small'
+                label={category === 'TARH' ? 'طرح' : 'جاری'}
+                sx={{
+                  mt: 0.5,
+                  height: 20,
+                  fontSize: '0.7rem',
+                  fontWeight: 600,
+                  alignSelf: 'flex-start',
+                  bgcolor: category === 'TARH' ? 'info.main' : 'success.main',
+                  color: 'white',
+                  '& .MuiChip-label': { px: 1 },
+                }}
+              />
+            )}
           </div>
           <div>
             {calculationType === 'weekly' && (
