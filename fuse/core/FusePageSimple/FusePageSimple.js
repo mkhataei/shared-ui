@@ -80,6 +80,9 @@ const Root = styled('div')(({ theme, ...props }) => ({
     alignItems: 'start',
     minHeight: 0,
     overflowY: 'auto',
+    width: '80%',
+    maxWidth: '80%',
+    margin: '0 auto',
   },
 
   '& .FusePageSimple-sidebarWrapper': {
@@ -246,7 +249,7 @@ const FusePageSimple = forwardRef((props, ref) => {
               {!props.loading && props.content && (
                 <FuseScrollbars
                   enable={props.scroll === 'content'}
-                  className={clsx('FusePageSimple-content container')}
+                  className='FusePageSimple-content'
                 >
                   {props.content}
                 </FuseScrollbars>
