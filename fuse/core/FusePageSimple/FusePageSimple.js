@@ -46,6 +46,9 @@ const Root = styled('div')(({ theme, ...props }) => ({
     display: 'flex',
     flex: '0 0 auto',
     backgroundSize: 'cover',
+    width: '80%',
+    maxWidth: '80%',
+    margin: '0 auto',
   },
 
   '& .FusePageSimple-topBg': {
