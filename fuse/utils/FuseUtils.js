@@ -45,11 +45,7 @@ class EventEmitter {
 class FuseUtils {
   static isSuperAdmin(user) {
     const role = this.getRoleFromUser(user)
-    return (
-      Boolean(role?.isAdmin) ||
-      Boolean(role?.admin) ||
-      Boolean(role?.superAdmin)
-    )
+    return Boolean(role?.isAdmin) || Boolean(role?.admin) || Boolean(role?.superAdmin)
   }
 
   static getRoleFromUser(user) {
@@ -57,8 +53,33 @@ class FuseUtils {
   }
 
   static getPermissionsFromUser(user) {
+    const permissionsSet = new Set()
+
+    // Get permissions from legacy single role
     const role = this.getRoleFromUser(user)
-    return role?.permissions
+    if (role?.permissions && Array.isArray(role.permissions)) {
+      role.permissions.forEach((p) => permissionsSet.add(p))
+    }
+
+    // Get permissions from multiple roles
+    if (user?.roles && Array.isArray(user.roles)) {
+      user.roles.forEach((role) => {
+        if (role?.permissions && Array.isArray(role.permissions)) {
+          role.permissions.forEach((p) => permissionsSet.add(p))
+        }
+      })
+    }
+
+    // Get permissions from groups
+    if (user?.groups && Array.isArray(user.groups)) {
+      user.groups.forEach((group) => {
+        if (group?.permissions && Array.isArray(group.permissions)) {
+          group.permissions.forEach((p) => permissionsSet.add(p))
+        }
+      })
+    }
+
+    return Array.from(permissionsSet)
   }
 
   static filterArrayByString(mainArr, searchText) {
@@ -403,27 +424,27 @@ class FuseUtils {
     return !data
       ? null
       : data.reduce((list, entry) => {
-        let clone = null
-        if (predicate(entry)) {
-          // if the object matches the filter, clone it as it is
-          clone = { ...entry }
-        }
-        if (entry.children != null) {
-          // if the object has childrens, filter the list of children
-          const children = this.filterRecursive(entry.children, predicate)
-          if (children.length > 0) {
-            // if any of the children matches, clone the parent object, overwrite
-            // the children list with the filtered list
-            clone = { ...entry, children }
+          let clone = null
+          if (predicate(entry)) {
+            // if the object matches the filter, clone it as it is
+            clone = { ...entry }
           }
-        }
+          if (entry.children != null) {
+            // if the object has childrens, filter the list of children
+            const children = this.filterRecursive(entry.children, predicate)
+            if (children.length > 0) {
+              // if any of the children matches, clone the parent object, overwrite
+              // the children list with the filtered list
+              clone = { ...entry, children }
+            }
+          }
 
-        // if there's a cloned object, push it to the output list
-        if (clone) {
-          list.push(clone)
-        }
-        return list
-      }, [])
+          // if there's a cloned object, push it to the output list
+          if (clone) {
+            list.push(clone)
+          }
+          return list
+        }, [])
   }
 }
 

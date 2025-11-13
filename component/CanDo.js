@@ -7,6 +7,17 @@ const CanDo = ({ permissions, children }) => {
 
   const canDoRequestedPermissions = permissions ? FuseUtils.hasPermission(permissions, user) : true
 
+  // Debug logging
+  if (permissions && !canDoRequestedPermissions) {
+    const userPermissions = FuseUtils.getPermissionsFromUser(user)
+    console.log('🔒 CanDo - Access Denied:', {
+      requested: permissions,
+      userHas: userPermissions,
+      userRoles: user?.roles?.map((r) => r.name),
+      userGroups: user?.groups?.map((g) => g.name),
+    })
+  }
+
   return canDoRequestedPermissions ? <>{children}</> : null
 }
 
