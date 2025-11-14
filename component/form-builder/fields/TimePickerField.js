@@ -2,7 +2,7 @@ import AdapterJalaali from '@date-io/jalaali'
 import { TextField } from '@mui/material'
 import { LocalizationProvider, MobileTimePicker } from '@mui/x-date-pickers'
 import { faIR } from '@mui/x-date-pickers/locales'
-import * as moment from 'moment-jalaali'
+import moment from 'moment-jalaali';
 import QuestionBox from './QuestionBox'
 
 function TimePickerField({ formState, question, error, setFormState }) {

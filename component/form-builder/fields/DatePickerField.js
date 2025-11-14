@@ -1,7 +1,7 @@
 import AdapterJalaali from '@date-io/jalaali'
 import { FormControl, TextField } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import * as moment from 'moment-jalaali'
+import moment from 'moment-jalaali';
 import QuestionBox from './QuestionBox'
 
 function DatePickerField({ formState, question, error, setFormState, disablePortal }) {

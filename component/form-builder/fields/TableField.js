@@ -17,7 +17,7 @@ import { Box } from '@mui/system'
 import CustomDialogTitle from '@shared/component/CustomDialogTitle'
 import ExpandableItem from '@shared/component/ExpandableItem'
 import Constants from '@shared/fuse/constants/Constants'
-import * as moment from 'moment-jalaali'
+import moment from 'moment-jalaali';
 import { useCallback, useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import DatePickerField from './DatePickerField'
