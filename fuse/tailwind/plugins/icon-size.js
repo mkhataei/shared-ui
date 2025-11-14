@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+import plugin from 'tailwindcss/plugin'
 
 const iconSize = plugin(
   ({ addUtilities, theme, e, variants }) => {
@@ -34,4 +34,4 @@ const iconSize = plugin(
   }
 )
 
-module.exports = iconSize
+export default iconSize

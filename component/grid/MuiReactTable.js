@@ -51,7 +51,7 @@ function MuiReactTable({
           ...col,
           Cell: ({ cell }) => {
             const text = cell.getValue()
-            if(typeof text === 'string' && text.length > 0 && text !== '-') {
+            if (typeof text === 'string' && text.length > 0 && text !== '-') {
               return <CopyableText text={text} copyText={text} />
             }
             return text
@@ -93,7 +93,6 @@ function MuiReactTable({
       sx: (theTheme) => {
         return {
           boxShadow: 'none',
-          backgroundColor: 'transparent',
           borderRadius: '0',
           backgroundColor: theTheme.palette.background.paper,
         }

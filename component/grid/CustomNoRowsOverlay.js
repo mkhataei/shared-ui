@@ -1,4 +1,4 @@
-const { styled, Box } = require('@mui/material')
+import { styled, Box } from '@mui/material'
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
   display: 'flex',
