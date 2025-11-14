@@ -1,6 +1,12 @@
 import { Alert, Box, Button, Paper, Typography } from '@mui/material'
 import FuseSvgIcon from '@shared/fuse/core/FuseSvgIcon'
 import { useNavigate } from 'react-router-dom'
+import {
+  LockOutlined,
+  SearchOff,
+  ErrorOutline,
+  PersonOutline,
+} from '@mui/icons-material'
 
 /**
  * @component ErrorPage
@@ -20,7 +26,7 @@ const ErrorPage = ({
     403: {
       title: 'دسترسی محدود شده',
       defaultMessage: 'شما دسترسی لازم برای مشاهده این بخش را ندارید.',
-      icon: 'heroicons-outline:lock-closed',
+      IconComponent: LockOutlined,
       gradient: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
       iconGradient: 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)',
       iconColor: 'rgba(45, 55, 72, 0.3)',
@@ -34,7 +40,7 @@ const ErrorPage = ({
     404: {
       title: 'صفحه یافت نشد',
       defaultMessage: 'صفحه یا منبع مورد نظر شما یافت نشد.',
-      icon: 'heroicons-outline:search',
+      IconComponent: SearchOff,
       gradient: 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)',
       iconGradient: 'linear-gradient(135deg, #718096 0%, #4a5568 100%)',
       iconColor: 'rgba(113, 128, 150, 0.3)',
@@ -45,10 +51,10 @@ const ErrorPage = ({
     500: {
       title: 'خطای سرور',
       defaultMessage: 'مشکلی در سرور پیش آمده است. لطفاً بعداً تلاش کنید.',
-      icon: 'heroicons-outline:exclamation-triangle',
-      gradient: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
-      iconGradient: 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)',
-      iconColor: 'rgba(74, 85, 104, 0.3)',
+      IconComponent: ErrorOutline,
+      gradient: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+      iconGradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+      iconColor: 'rgba(239, 68, 68, 0.4)',
       animation: true,
       fullScreen: true,
       alert: {
@@ -59,7 +65,7 @@ const ErrorPage = ({
     401: {
       title: 'احراز هویت نشده',
       defaultMessage: 'برای دسترسی به این بخش باید وارد سیستم شوید.',
-      icon: 'heroicons-outline:user',
+      IconComponent: PersonOutline,
       gradient: 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)',
       iconGradient: 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)',
       iconColor: 'rgba(74, 85, 104, 0.3)',
@@ -137,9 +143,24 @@ const ErrorPage = ({
                 },
               }}
             >
-              <FuseSvgIcon size={64} sx={{ color: 'white' }}>
-                {config.icon}
-              </FuseSvgIcon>
+              {config.IconComponent ? (
+                <config.IconComponent 
+                  sx={{ 
+                    fontSize: 64, 
+                    color: 'white',
+                    animation: statusCode === 403 ? 'lockShake 3s ease-in-out infinite' : statusCode === 500 ? 'errorPulse 1.5s ease-in-out infinite' : 'none',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+                    '@keyframes errorPulse': {
+                      '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+                      '50%': { transform: 'scale(1.1) rotate(5deg)' },
+                    },
+                  }} 
+                />
+              ) : (
+                <FuseSvgIcon size={64} sx={{ color: 'white' }}>
+                  {config.icon}
+                </FuseSvgIcon>
+              )}
             </Box>
 
             {/* Error Code & Message */}
