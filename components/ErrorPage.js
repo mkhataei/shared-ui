@@ -34,12 +34,12 @@ const ErrorPage = ({
     404: {
       title: 'صفحه یافت نشد',
       defaultMessage: 'صفحه یا منبع مورد نظر شما یافت نشد.',
-      icon: 'heroicons-outline:magnifying-glass',
+      icon: 'heroicons-outline:search',
       gradient: 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)',
       iconGradient: 'linear-gradient(135deg, #718096 0%, #4a5568 100%)',
       iconColor: 'rgba(113, 128, 150, 0.3)',
       animation: true,
-      fullScreen: false,
+      fullScreen: true,
       alert: null
     },
     500: {
@@ -76,15 +76,14 @@ const ErrorPage = ({
   const displayTitle = title || config.title
   const displayMessage = message || config.defaultMessage
 
-  // Component برای خطای 403 (Full Screen با انیمیشن)
   if (config.fullScreen && config.animation) {
     return (
       <Box 
         className='flex items-center justify-center w-full'
         sx={{ 
-          height: '100vh',
           alignItems: 'center',
           overflow: 'hidden',
+          marginTop:16
         }}
       >
         <Paper 
@@ -98,7 +97,7 @@ const ErrorPage = ({
             borderRadius: 4,
             position: 'relative',
             zIndex: 1,
-            backgroundColor: 'transparent',
+            backgroundColor: 'white',
             backdropFilter: 'none',
           }}
         >

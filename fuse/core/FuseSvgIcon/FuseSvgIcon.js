@@ -27,11 +27,16 @@ const Root = styled(Box)(({ theme, ...props }) => ({
 }))
 
 const FuseSvgIcon = forwardRef((props, ref) => {
-  if (!props.children.includes(':')) {
+  // Guard: if children is not a string, fall back to MUI Icon
+  if (typeof props.children !== 'string' || !props.children.includes(':')) {
     return <Icon ref={ref} {...props} />
   }
 
+  // Convert 'collection:name' -> 'collection.name.svg#name'
   const iconPath = props.children.replace(':', '.svg#')
+
+  // Use absolute path to ensure the sprite is resolved regardless of route
+  const href = `/assets/icons/${iconPath}`
 
   return (
     <Root
@@ -46,7 +51,7 @@ const FuseSvgIcon = forwardRef((props, ref) => {
       sx={props.sx}
       color={props.color}
     >
-      <use xlinkHref={`assets/icons/${iconPath}`} />
+      <use xlinkHref={href} />
     </Root>
   )
 })
