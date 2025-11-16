@@ -14,9 +14,9 @@ export const usePageTracking = () => {
   useEffect(() => {
     // Set user ID - چک کردن همه حالات ممکن
     const userId = user?.data?._id || user?.data?.id || user?._id || user?.id;
-    
+
     if (userId) {
-      console.log('✅ Activity Tracking - User ID set:', userId);
+      // console.log('✅ Activity Tracking - User ID set:', userId);
       activityTracker.setUserId(userId);
     } else {
       console.warn('⚠️ Activity Tracking - No user ID found. User object:', user);

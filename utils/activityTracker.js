@@ -38,7 +38,7 @@ class ActivityTracker {
     sessionId = this.generateSessionId();
     localStorage.setItem(STORAGE_KEY, sessionId);
     localStorage.setItem(STORAGE_TIMESTAMP_KEY, now.toString());
-    
+
     console.log('🆕 New session created:', sessionId);
     return sessionId;
   }
@@ -51,11 +51,11 @@ class ActivityTracker {
   setUserId(userId) {
     // Ensure userId is a string
     this.userId = userId ? String(userId) : null;
-    console.log('📍 ActivityTracker.setUserId called:', {
-      input: userId,
-      stored: this.userId,
-      type: typeof this.userId
-    });
+    // console.log('📍 ActivityTracker.setUserId called:', {
+    //   input: userId,
+    //   stored: this.userId,
+    //   type: typeof this.userId
+    // });
   }
 
   setEnabled(enabled) {
