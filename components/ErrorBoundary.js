@@ -23,14 +23,14 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     // می‌توانید خطا را به یک سرویس logging بفرستید
     console.error('ErrorBoundary caught an error:', error, errorInfo)
-    
+
     this.setState({
       error,
       errorInfo,
     })
 
     // ارسال خطا به سرویس مانیتورینگ (مثل Sentry)
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       // logErrorToService(error, errorInfo)
     }
   }
@@ -39,7 +39,7 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       // می‌توانید هر UI سفارشی‌ای برای خطا نمایش دهید
       const { customFallback } = this.props
-      
+
       if (customFallback) {
         return customFallback(this.state.error, this.state.errorInfo)
       }
@@ -53,15 +53,15 @@ class ErrorBoundary extends React.Component {
           showBackButton={true}
           showHomeButton={true}
           customActions={
-            process.env.NODE_ENV === 'development' && this.state.error ? (
+            import.meta.env.DEV && this.state.error ? (
               <details style={{ marginTop: 20, textAlign: 'left' }}>
                 <summary style={{ cursor: 'pointer', marginBottom: 10 }}>
                   جزئیات خطا (فقط در حالت توسعه)
                 </summary>
-                <pre style={{ 
-                  background: '#1a1a1a', 
-                  color: '#00ff00', 
-                  padding: 15, 
+                <pre style={{
+                  background: '#1a1a1a',
+                  color: '#00ff00',
+                  padding: 15,
                   borderRadius: 8,
                   overflow: 'auto',
                   maxHeight: 300,
