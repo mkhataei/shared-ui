@@ -1,12 +1,12 @@
-import FuseLoading from '@shared/fuse/core/FuseLoading'
 import PropTypes from 'prop-types'
 import { Suspense } from 'react'
+import FuseSplashScreen from '../FuseSplashScreen'
 
 /**
  * React Suspense defaults
  * For to Avoid Repetition
  */ function FuseSuspense(props) {
-  return <Suspense fallback={<FuseLoading {...props.loadingProps} />}>{props.children}</Suspense>
+  return <Suspense fallback={ <FuseSplashScreen hideLogo />}>{props.children}</Suspense>
 }
 
 FuseSuspense.propTypes = {
