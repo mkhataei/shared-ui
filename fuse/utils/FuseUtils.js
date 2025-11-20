@@ -79,7 +79,9 @@ class FuseUtils {
       })
     }
 
-    return Array.from(permissionsSet)
+    const finalPermissions = Array.from(permissionsSet)
+
+    return finalPermissions
   }
 
   static filterArrayByString(mainArr, searchText) {
@@ -410,7 +412,22 @@ class FuseUtils {
      */
     const userPermissions = this.getPermissionsFromUser(user)
     if (Array.isArray(userPermissions)) {
-      return permissions.some((r) => userPermissions.indexOf(r) >= 0)
+      const hasAccess = permissions.some((r) => userPermissions.indexOf(r) >= 0)
+
+      // Debug log
+      if (!hasAccess) {
+        console.log('🔍 Permission Check Failed:', {
+          requested: permissions,
+          userHas: userPermissions,
+          comparison: permissions.map(p => ({
+            permission: p,
+            exists: userPermissions.indexOf(p) >= 0,
+            type: typeof p,
+          }))
+        })
+      }
+
+      return hasAccess
     }
 
     /*
