@@ -12,7 +12,6 @@ function ProjectProgressWidget({
   actualProgress = 0,
   plannedProgress = 0,
   progressData = [],
-  calculationType = 'monthly',
   subProjectId = '',
   onNavigate,
   modernBorder = false, // فعال‌سازی استایل بوردر مدرن
@@ -212,11 +211,6 @@ function ProjectProgressWidget({
                   '& .MuiChip-label': { px: 1 },
                 }}
               />
-            )}
-          </div>
-          <div>
-            {calculationType === 'weekly' && (
-              <Chip size='small' className='font-medium text-xs h-6' label='هفتگی' />
             )}
           </div>
         </div>

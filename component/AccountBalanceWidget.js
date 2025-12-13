@@ -17,7 +17,6 @@ function ProjectProgressWidget({ data }) {
   const actualProgress = data?.actualProgress || 0
   const plannedProgress = data?.plannedProgress || 0
   const progressData = data?.progress || []
-  const progressCalculationType = data?.progressCalculationType
 
   // تبدیل داده‌های progress به فرمت نمودار
   const generateChartSeries = () => {
@@ -202,12 +201,6 @@ function ProjectProgressWidget({ data }) {
             <Typography className='font-medium' color='text.secondary'>
               مقایسه پیشرفت واقعی و برنامه‌ای پروژه
             </Typography>
-          </div>
-
-          <div className=''>
-            {progressCalculationType === 'weekly' && (
-              <Chip size='small' className='font-medium text-sm' label='هفتگی' />
-            )}
           </div>
         </div>
         <div className='flex items-start mt-24 mr-8'>
