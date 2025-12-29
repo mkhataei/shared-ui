@@ -55,25 +55,25 @@ class FuseUtils {
   static getPermissionsFromUser(user) {
     const permissionsSet = new Set()
 
-    // Get permissions from legacy single role
+    // Get permissions from legacy single role (فقط اگر فعال باشد)
     const role = this.getRoleFromUser(user)
-    if (role?.permissions && Array.isArray(role.permissions)) {
+    if (role?.permissions && Array.isArray(role.permissions) && !role.disabled) {
       role.permissions.forEach((p) => permissionsSet.add(p))
     }
 
-    // Get permissions from multiple roles
+    // Get permissions from multiple roles (فقط نقش‌های فعال)
     if (user?.roles && Array.isArray(user.roles)) {
       user.roles.forEach((role) => {
-        if (role?.permissions && Array.isArray(role.permissions)) {
+        if (role?.permissions && Array.isArray(role.permissions) && !role.disabled) {
           role.permissions.forEach((p) => permissionsSet.add(p))
         }
       })
     }
 
-    // Get permissions from groups
+    // Get permissions from groups (فقط گروه‌های فعال)
     if (user?.groups && Array.isArray(user.groups)) {
       user.groups.forEach((group) => {
-        if (group?.permissions && Array.isArray(group.permissions)) {
+        if (group?.permissions && Array.isArray(group.permissions) && !group.disabled) {
           group.permissions.forEach((p) => permissionsSet.add(p))
         }
       })
