@@ -2,6 +2,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { Box, CircularProgress, IconButton, Tooltip, Zoom } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
 
 const ActiveToggleButtonReactQuery = ({
   isActive,
@@ -12,21 +13,38 @@ const ActiveToggleButtonReactQuery = ({
   disableLabel = 'غیر فعال',
   tooltipPlacement = 'top',
 }) => {
+  const [optimisticIsActive, setOptimisticIsActive] = useState(isActive)
   const isWaiting = mutation.isPending && mutation?.variables?.id === id
+
+  // Update local state when prop changes (after query refetch)
+  useEffect(() => {
+    setOptimisticIsActive(isActive)
+  }, [isActive])
 
   const sendToggleVisibilityRequest = (visibility) => {
     if (isWaiting) {
       return
     }
 
-    mutation.mutate({
-      id,
-      body: getRequestDataObject(visibility),
-    })
+    // Optimistic update
+    setOptimisticIsActive(visibility)
+
+    mutation.mutate(
+      {
+        id,
+        body: getRequestDataObject(visibility),
+      },
+      {
+        onError: () => {
+          // Revert on error
+          setOptimisticIsActive(isActive)
+        },
+      }
+    )
   }
 
-  const currentStateLabel = isActive ? activeLabel : disableLabel
-  const tooltipActionLabel = isActive ? disableLabel : activeLabel
+  const currentStateLabel = optimisticIsActive ? activeLabel : disableLabel
+  const tooltipActionLabel = optimisticIsActive ? disableLabel : activeLabel
   const tooltipTitle = (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
       <Box component='span' sx={{ fontSize: 12, opacity: 0.7 }}>
@@ -45,11 +63,11 @@ const ActiveToggleButtonReactQuery = ({
         <IconButton
           size='small'
           aria-label={ariaLabel}
-          aria-pressed={isActive}
+          aria-pressed={optimisticIsActive}
           disabled={isWaiting}
-          onClick={() => sendToggleVisibilityRequest(!isActive)}
+          onClick={() => sendToggleVisibilityRequest(!optimisticIsActive)}
           sx={(theme) => {
-            const palette = isActive ? theme.palette.success : theme.palette.error
+            const palette = optimisticIsActive ? theme.palette.success : theme.palette.error
 
             return {
               padding: theme.spacing(1),
@@ -91,7 +109,7 @@ const ActiveToggleButtonReactQuery = ({
               justifyContent: 'center',
             }}
           >
-            <Zoom in={isActive} mountOnEnter unmountOnExit>
+            <Zoom in={optimisticIsActive} mountOnEnter unmountOnExit>
               <Box
                 sx={{
                   position: 'absolute',
@@ -111,7 +129,7 @@ const ActiveToggleButtonReactQuery = ({
               </Box>
             </Zoom>
 
-            <Zoom in={!isActive} mountOnEnter unmountOnExit>
+            <Zoom in={!optimisticIsActive} mountOnEnter unmountOnExit>
               <Box
                 sx={{
                   position: 'absolute',
@@ -148,7 +166,7 @@ const ActiveToggleButtonReactQuery = ({
                   sx={{
                     position: 'absolute',
                     color: (theme) =>
-                      isActive ? theme.palette.success.main : theme.palette.error.main,
+                      optimisticIsActive ? theme.palette.success.main : theme.palette.error.main,
                     animationDuration: '600ms',
                   }}
                 />
